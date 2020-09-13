@@ -1,0 +1,6 @@
+data_attribute,data_info
+main_source,https://data.gov.tw/dataset/128506
+get_datatype,csv
+date,20190925
+download_dirpath,"./download"
+notes,"file size is large, so provide download links instead (take it from file data_souce.csv take only english file)"

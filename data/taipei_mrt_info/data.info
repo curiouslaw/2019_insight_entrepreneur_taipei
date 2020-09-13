@@ -1,0 +1,5 @@
+data_attribute,data_info
+main_source,https://data.gov.tw/dataset/128506
+get_datatype,7Z
+download_dirpath,"./download"
+notes,"file size is large, include download links instead (the links logic is in generate_download_link.py file)"
