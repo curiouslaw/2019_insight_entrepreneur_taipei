@@ -38,7 +38,7 @@ extract_compressed_in_dir() {
 	for filepath in $(find $arg_output_dir -name '*.7z' | sed 's@//@/@'); do	
 		echo "INFO: extracting ${filepath}"
 		
-		7za x $filepath -o $arg_output_dir
+		7za x $filepath -o$arg_output_dir
 		if [ $? -eq 0 ]; then
 			echo "INFO: clean compressed file in $filepath"
 			rm $filepath
@@ -77,7 +77,7 @@ else
 			echo "INFO: will reading link list in $url_path"
 			echo "INFO: begin downloading file to $output_dir"
 
-			wget -i $url_path --content-disposition -P $output_dir
+		#	wget -i $url_path --content-disposition -P $output_dir
 
 			echo "INFO: file download finished"
 			echo "INFO: begin extracting file"
