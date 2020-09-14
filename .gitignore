@@ -1,0 +1,12 @@
+# project and cache file
+/conda-env
+.vscode
+*.pyc
+*.ipynb
+*.swp
+.ipynb_checkpoints/
+
+# download data
+**/download/*
+!.keep
+
