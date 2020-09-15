@@ -9,7 +9,7 @@ import requests
 from bs4 import BeautifulSoup
 
 CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
-INFO_PATH = os.path.join(CURRENT_DIR, 'data.info')
+INFO_PATH = os.path.join(CURRENT_DIR, 'data_info.csv')
 OUTPUT_PATH = os.path.join(CURRENT_DIR, 'download_links.txt')
 
 def get_info(filepath:str, name:str):
