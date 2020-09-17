@@ -1,0 +1,5 @@
+data_attribute,data_info
+main_source,https://www.591.com.tw
+get_datatype,json
+download_dirpath,"./download"
+notes,"only sample file is included in git. run scrape_591.py to get the file, data might be changed"
