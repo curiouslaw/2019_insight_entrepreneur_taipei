@@ -1,5 +1,5 @@
 data_attribute,data_info
 main_source,https://www.591.com.tw
 get_datatype,json
-download_dirpath,"./download"
+download_filepath,"./download/591_xhr_responses.json"
 notes,"only sample file is included in git. run scrape_591.py to get the file, data might be changed"
