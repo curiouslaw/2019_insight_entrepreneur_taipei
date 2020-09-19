@@ -22,7 +22,6 @@ from shared_lib.data_info import DataInfo
 from lib.web_scrapper.web_explorer._591_tw import WebExplorer591
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-DATA_DIR = os.path.join(BASE_DIR, 'data', 'taipei_shop_rent_price')
 
 
 def build_argparser():
@@ -72,7 +71,8 @@ if __name__ == '__main__':
     data_info_path = os.path.join(data_dir, 'data_info.csv')
     data_info = DataInfo(data_info_path)
 
-    output_path = os.path.join(data_dir, data_info.get_info('download_filepath'))
+    output_path = data_info.get_info_force('download_filepath')
+    # output_path = 
 
     # set webdriver, request interceptor scope, and wait object
     print("note: the program heavily depend on your internet connection")
