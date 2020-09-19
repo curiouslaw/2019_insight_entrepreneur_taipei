@@ -1,0 +1,4 @@
+data_attribute,data_info
+main_source,https://data.gov.tw/dataset/7441
+get_datatype,shp
+download_links_filepath,download_links.txt
