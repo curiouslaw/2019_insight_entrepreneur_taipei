@@ -1,5 +1,6 @@
 data_attribute,data_info
 main_source,https://data.gov.tw/dataset/128506
 get_datatype,7z
-download_dirpath,"./download"
+download_links_filepath,"download_links.txt"
+download_dirpath,"download"
 notes,"only sample file is included in git. Included the full download links instead (the links logic is in data_collector/generate_download_link.py file)"

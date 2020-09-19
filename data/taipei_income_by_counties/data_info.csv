@@ -1,5 +1,5 @@
 data_attribute,data_info
 main_source,https://github.com/cicadatatw/taiwan-income-by-village/tree/master/2014
 date,20141231
-download_filepath,"./2014.tar.gz"
+download_filepath,"2014.tar.gz"
 note,"file included in git. Special thanks to cicadata to share the data!"

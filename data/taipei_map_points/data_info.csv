@@ -2,5 +2,6 @@ data_attribute,data_info
 main_source,https://data.gov.tw/dataset/128272
 get_datatype,json
 date,20170209
-download_filepath,"./data.json"
+download_links_filepath,"download_links.txt"
+download_filepath,"download/data.json"
 note,"whole file is included in git, located in this directory, name data.json"
