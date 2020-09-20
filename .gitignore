@@ -1,5 +1,6 @@
 # project and cache file
 /conda-env
+/dev
 .vscode
 *.pyc
 *.ipynb
@@ -8,6 +9,6 @@
 *.DS_Store
 
 # download data
-**/download/*
+**/download-data_lake/*
 !.keep
-
+!data/taipei_income_by_counties/download-data_lake/*

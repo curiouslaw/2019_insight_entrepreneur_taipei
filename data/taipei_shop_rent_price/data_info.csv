@@ -1,6 +1,8 @@
 data_attribute,data_info
 main_source,https://www.591.com.tw
 get_datatype,json
-download_filepath,"./download/591_xhr_responses.json"
-normalized_filepath,"./normalized/taipei_shop_rent_price.csv"
+download_dirpath,"download-data_lake"
+structured_filepath,"structured/taipei_shop_rent_price.csv"
+normalized_filepath,"../normalized-data_warehouse"
+aggregated_filepath,"../aggregated-data_mart"
 notes,"only sample file is included in git. run scrape_591.py to get the file, data might be changed"
