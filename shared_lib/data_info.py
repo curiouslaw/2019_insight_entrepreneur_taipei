@@ -16,8 +16,9 @@ class DataInfo:
     def __init__(self, filepath: str):
         if not os.path.isfile(filepath):
             raise FileNotFoundError("data_info.csv is not found in {}".format(filepath))
-        
+
         self.filepath = filepath
+        self.data_dir = os.path.dirname(filepath)
 
     def get_info(self, data_attribute: str):
         """Read data_info.csv and try to find data attribute
@@ -69,25 +70,23 @@ class DataInfo:
         else:
             return False
 
-    def get_info_contain_force(self, data_attribute: str) -> List[str]:
-        if not (data_info := self.get_info_contain(data_attribute)):
-            raise KeyError("data_info.csv does not contain {} data".format(data_attribute))
+    def get_download_links_filepath(self) -> str:
+        return os.path.join(self.data_dir, self.get_info_force('download_links_filepath'))
 
-        return data_info
+    def get_download_dirpath(self) -> str:
+        return os.path.join(self.data_dir, self.get_info_force('download_dirpath'))
 
-    def get_download_filepath(self) -> Union[str, List[str]]:
-        """Method for getting the download data filepath / list of filepath
-        from the data_info.csv. Would always try to look for single filepath
-        if possible.
+    def get_download_filepath_list(self) -> List[str]:
+        download_dirpath = self.get_download_dirpath()
+        filepath_list = [x for x in os.listdir(download_dirpath) if not (x.startswith('.'))]
+        filepath_list = [os.path.join(download_dirpath, x) for x in filepath_list]
+        return filepath_list
 
-        Raises:
-            KeyError: [description]
+    def get_structured_filepath(self) -> str:
+        return os.path.join(self.data_dir, self.get_info_force('structured_filepath'))
 
-        Returns:
-            Union[str, List[str]]: would return filepath if possible, but
-        """
-        if (filepath := self.get_info('download_filepath')):
-            return filepath
-        if (dirpath := self.get_info('download_filepath')):
-            return os.listdir(dirpath)
-        raise KeyError("data info does't contain download_filepath or download_dirpath attribute.")
+    def get_normalized_filepath(self) -> str:
+        return os.path.join(self.data_dir, self.get_info_force('normalized_filepath'))
+
+    def get_aggregated_filepath(self) -> str:
+        return os.path.join(self.data_dir, self.get_info_force('aggregated_filepath'))

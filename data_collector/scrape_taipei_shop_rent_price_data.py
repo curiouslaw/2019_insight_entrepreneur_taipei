@@ -59,7 +59,7 @@ def check_page(driver: object, retry: int = 3):
 
     if retry <= 0:
         print('ERROR: fail to load and refresh page!')
-        sys.exit(0)
+        sys.exit(45)
 
 
 if __name__ == '__main__':
@@ -71,8 +71,8 @@ if __name__ == '__main__':
     data_info_path = os.path.join(data_dir, 'data_info.csv')
     data_info = DataInfo(data_info_path)
 
-    output_path = data_info.get_info_force('download_filepath')
-    # output_path = 
+    output_filename = '591_xhr_responses.json'
+    output_filepath = os.path.join(data_info.get_download_dirpath(), output_filename)
 
     # set webdriver, request interceptor scope, and wait object
     print("note: the program heavily depend on your internet connection")
@@ -125,8 +125,8 @@ if __name__ == '__main__':
             break
 
     print("INFO: seems like no more next page, wrapping data")
-    web_explorer.save_all_responses(output_path, 'utf-8')
+    web_explorer.save_all_responses(output_filepath, 'utf-8')
 
     driver.close()
     print('INFO: getting data from {} finished. File saved on {}'
-        .format(start_url, output_path))
+        .format(start_url, output_filepath))

@@ -40,7 +40,7 @@ def build_argparser():
 
     if len(sys.argv) == 1:
         parser.print_help()
-        sys.exit(1)
+        sys.exit(45)
 
     return parser
 
@@ -68,11 +68,11 @@ def try_to_get_link(url: str, filetype: str) -> List[str]:
             return download_list
         else:
             print('ERROR: download link not found, web style might be changed')
-            sys.exit(0)
+            sys.exit(45)
 
     else:
         print('ERROR: generate link might not supported')
-        sys.exit(0)
+        sys.exit(45)
 
 
 if __name__ == "__main__":
@@ -88,12 +88,10 @@ if __name__ == "__main__":
 
     data_info = DataInfo(data_info_path)
 
-    if not (url := data_info.get_info('main_source')):
-        url = data_info.get_info_contain_force('main_source_')
+    url = data_info.get_info_force('main_source')
 
     download_filetype = data_info.get_info('get_datatype')
-    links_filepath = data_info.get_info_force('download_links_filepath')
-    output_filepath = os.path.join(data_dir, links_filepath)
+    output_filepath = data_info.get_download_links_filepath()
 
     if isinstance(url, list):
         download_list = []
@@ -112,4 +110,3 @@ if __name__ == "__main__":
         output_filepath))
     print("INFO: please run 'bash download_and_extract_url.sh {}' to download the file".format(
         data_name))
-
