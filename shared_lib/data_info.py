@@ -88,6 +88,12 @@ class DataInfo:
     def get_structured_dirpath(self) -> str:
         return os.path.join(self.data_dir, self.get_info_force('structured_dirpath'))
 
+    def get_structured_filepath_list(self) -> List[str]:
+        structured_dirpath = self.get_structured_dirpath()
+        filepath_list = [x for x in os.listdir(structured_dirpath) if not (x.startswith('.'))]
+        filepath_list = [os.path.join(structured_dirpath, x) for x in filepath_list]
+        return filepath_list
+
     def get_normalized_filepath(self) -> str:
         return os.path.join(self.data_dir, self.get_info_force('normalized_filepath'))
 

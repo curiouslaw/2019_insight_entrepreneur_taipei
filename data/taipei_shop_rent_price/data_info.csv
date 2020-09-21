@@ -3,6 +3,6 @@ main_source,https://www.591.com.tw
 get_datatype,json
 download_dirpath,"download-data_lake"
 structured_filepath,"structured/taipei_shop_rent_price.csv"
-normalized_filepath,"../normalized-data_warehouse"
-aggregated_filepath,"../aggregated-data_mart"
+normalized_filepath,"../normalized-data_warehouse/taipei_shop_rent_price.csv"
+aggregated_filepath,"../aggregated-data_mart/taipei_shop_rent_price.csv"
 notes,"only sample file is included in git. run scrape_591.py to get the file, data might be changed"

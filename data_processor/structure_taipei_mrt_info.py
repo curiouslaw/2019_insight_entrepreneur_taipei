@@ -1,3 +1,4 @@
+from builtins import KeyError
 import os
 import re
 import subprocess
@@ -26,7 +27,8 @@ def get_row_number(filepath: str, footer_lookup: int = 20) -> int:
     stdout = stdout.decode('utf-8')
 
     match = re.search('(\([\s+]?)([0-9]+)([\s+]?個資料.*\))', stdout)
-    row_number = match.group(2)
+    if not (row_number := match.group(2)):
+        raise KeyError('The number of data not found, the publisher might change their format')
 
     return int(row_number)
 
