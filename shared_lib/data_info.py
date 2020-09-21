@@ -85,8 +85,14 @@ class DataInfo:
     def get_structured_filepath(self) -> str:
         return os.path.join(self.data_dir, self.get_info_force('structured_filepath'))
 
+    def get_structured_dirpath(self) -> str:
+        return os.path.join(self.data_dir, self.get_info_force('structured_dirpath'))
+
     def get_normalized_filepath(self) -> str:
         return os.path.join(self.data_dir, self.get_info_force('normalized_filepath'))
+
+    def get_normalized_dirpath(self) -> str:
+        return os.path.join(self.data_dir, self.get_info_force('normalized_dirpath'))
 
     def get_aggregated_filepath(self) -> str:
         return os.path.join(self.data_dir, self.get_info_force('aggregated_filepath'))

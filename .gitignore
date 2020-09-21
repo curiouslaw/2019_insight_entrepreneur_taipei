@@ -10,5 +10,6 @@
 
 # download data
 **/download-data_lake/*
+**/structured/*
 !.keep
 !data/taipei_income_by_counties/download-data_lake/*

@@ -84,7 +84,7 @@ else
 	for arg in ${AVAILABLE_ARGUMENTS[@]}; do
 		if [[ $arg == $1 ]]; then
 			url_path="$CURRENT_DIR/../data/$1/download_links.txt"
-			output_dir="$CURRENT_DIR/../data/$1/download/"
+			output_dir="$CURRENT_DIR/../data/$1/download-data_lake/"
 
 			[[ ! -f $url_path ]] && echo "ERROR: links file $url_path not found" && exit
 

@@ -2,7 +2,7 @@ data_attribute,data_info
 main_source,https://github.com/cicadatatw/taiwan-income-by-village/tree/master/2014
 date,20141231
 download_dirpath,download-data_lake
-structured_filepath,taipei_income_by_district.csv
+structured_filepath,structured/taipei_income_by_district.csv
 normalized_filepath,../normalized-data_warehouse
 aggregated_filepath,../aggregated-data_mart
 note,file included in git. Special thanks to cicadata to share the data!
