@@ -35,6 +35,7 @@ Current Progress:
     - [ ] finish the normalization data part
         - [x] make an automatic translator helper
         - [ ] make an lat long mapper
+            - [x] get the lat long data for taipei_mrt_info
         - [x] finish taipei_income_by_district data part
         - [ ] finish taipei_map_point data part
         - [ ] finish taipei_mrt_info data part

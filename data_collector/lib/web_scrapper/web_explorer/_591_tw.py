@@ -7,10 +7,8 @@ from . import WebExplorer
 class WebExplorer591(WebExplorer):
     def __init__(self, driver_obj: object, url: str):
         self.driver = driver_obj
-        super().__init__(self.driver)
-
-        if url:
-            self.get(url)
+        self.url = url
+        super().__init__(self.driver, self.url)
 
     def choose_initial_popup(self, town: str):
         return self.wait_and_click((By.XPATH, '//div/dl/dd'), lambda x: town in x.text)

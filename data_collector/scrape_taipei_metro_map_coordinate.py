@@ -1,7 +1,8 @@
-# This file would intercept the XHR request of shop front data of www.591.tw
+# This file would for to www.metro.taipei, get some links to scrape and take data
+# on it based on the requred data
 #
 # Note:
-# - The process respect www.591.com.tw website permission (i.e. robots.txt)
+# - The process respect www.metro.taipei website permission (i.e. robots.txt)
 # - Please use the code for education purpose or reference only,
 #   don't use the code to exploit or do something harmful for the company
 # - Each scrape is different, this approach is the pragmatic approach with
@@ -14,13 +15,14 @@ import os
 import sys
 import time
 
-from seleniumwire import webdriver
+import pandas as pd
+from selenium import webdriver
 
 from lib import shared_lib
 from shared_lib.data_info import DataInfo
 
 from lib.web_scrapper.web_explorer import check_page
-from lib.web_scrapper.web_explorer._591_tw import WebExplorer591
+from lib.web_scrapper.web_explorer.taipei_metro import WebExplorerTaipeiMetro
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -49,11 +51,11 @@ if __name__ == '__main__':
     args = parser.parse_args()
     option = args.option
 
-    data_dir = os.path.join(BASE_DIR, 'data', 'taipei_shop_rent_price')
+    data_dir = os.path.join(BASE_DIR, 'data', 'taipei_mrt_map_coordinate')
     data_info_path = os.path.join(data_dir, 'data_info.csv')
     data_info = DataInfo(data_info_path)
 
-    output_filename = '591_xhr_responses.json'
+    output_filename = 'taipei_mrt_map_coordinate.csv'
     output_filepath = os.path.join(data_info.get_download_dirpath(), output_filename)
 
     # set webdriver, request interceptor scope, and wait object
@@ -67,48 +69,45 @@ if __name__ == '__main__':
 
     driver = webdriver.Chrome(options=webdriver_options)
     driver.set_page_load_timeout(30)
-    url_regex = '.*business\.591\.com\.tw\/home\/search\/rsList\?.*'
-    driver.scopes = [url_regex]
-    start_url = 'https://www.591.com.tw/'
+    start_url = data_info.get_info_force('main_source')
 
-    web_explorer = WebExplorer591(driver, start_url)
+    web_explorer = WebExplorerTaipeiMetro(driver, start_url)
     check_page(driver)
 
     sys.stderr = object  # hacky way to silent thread response fail
 
-    # start page as new guest
     print("INFO: starting the crawler")
+    # get all of the station
+    available_station_links = web_explorer.scrape_available_station_links()
 
-    # arrived at homepage, go to the city and category
-    web_explorer.initial_guest_page_to_home_page('台北', '店面')
-
-    # starting to get data
-    print("INFO: starting to get data")
-    last_page_num = web_explorer.get_last_page_num()
+    # go to the station one by one and grab long lat data
+    total_page = len(available_station_links) 
     current_page_num = 1
 
-    while True:
-        if last_page_num:
-            print("INFO: getting data for page {} of {}".format(
-                current_page_num, last_page_num))
-        else:
-            print("INFO: getting data for page {}".format(current_page_num))
+    long_lat_data = {}
 
-        time.sleep(3)  # friendly for the server
-        driver.wait_for_request(url_regex)
-        print("INFO: page {} finished, moving to next page...".format(current_page_num))
+    for link in available_station_links:
+        print("INFO: getting data for page {} of {}".format(
+            current_page_num, total_page))
+        print("INFO: getting data for page {}".format(link))
+        web_explorer.get(link)
 
-        web_explorer.scroll_down_until_end()
+        long_lat_data = {
+            **long_lat_data,
+            **web_explorer.scrape_longitude_latitude_data()  # this is where the scraping function called
+        }
+        time.sleep(1)  # try to be polite ok..
+        print("INFO: finished getting data for page {}".format(current_page_num))
+
         current_page_num = current_page_num + 1
 
-        next_page_available = web_explorer.click_next_button()
-
-        if not next_page_available:
-            break
-
-    print("INFO: seems like no more next page, wrapping data")
-    web_explorer.save_all_responses(output_filepath, 'utf-8')
-
     driver.close()
-    print('INFO: getting data from {} finished. File saved on {}'
-        .format(start_url, output_filepath))
+
+    print("INFO: finished getting all data. Data saved in: {}"
+        .format(output_filepath)
+    )
+
+    df_data = pd.DataFrame().from_dict(long_lat_data, orient='index')
+    df_data.index = df_data.index.set_names('station_name')
+    df_data = df_data.reset_index()
+    df_data.to_csv(output_filepath, index=False)

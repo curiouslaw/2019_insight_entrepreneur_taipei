@@ -1,1 +1,1 @@
-from .core import WebExplorer
+from .core import WebExplorer, check_page

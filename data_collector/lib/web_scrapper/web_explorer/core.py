@@ -1,8 +1,10 @@
 import time
 
-from typing import Callable
+from typing import Callable, List
 from random import random
 
+from selenium import webdriver
+from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
@@ -10,13 +12,35 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as ec
 
 
+def check_page(driver: object, retry: int = 3) -> None:
+    while retry > 0:
+        try:
+            time.sleep(2)
+            driver.find_element_by_xpath('//body[@class="neterror"]')
+            print("INFO: can't reach website, might be connection problem or your are blocked by the website. Will try refresh {} time".format(retry))
+
+            driver.refresh()
+            retry = retry - 1
+
+        except Exception:
+            print('INFO: page loaded successfully')
+            break
+
+    if retry <= 0:
+        print('ERROR: fail to load and refresh page!')
+        sys.exit(45)
+
+
 class WebExplorer:
-    def __init__(self, driver: object):
+    def __init__(self, driver: webdriver, url: str):
         self.driver = driver
         self.wait = WebDriverWait(self.driver, 5)
         self.action = ActionChains(self.driver)
+        self.url = url
 
-    def get(self, url: str):
+        self.get(self.url)
+
+    def get(self, url: str) -> None:
         self.driver.get(url)
 
     def wait_and_click(self, locator_obj: object,
@@ -69,13 +93,20 @@ class WebExplorer:
             print("ERROR: {} occured, stop running function".format(e))
             return False
 
-    def get_web_elements_obj(self, locator_obj: object) -> list:
+    def find_a_web_element_obj(self, locator_obj: object) -> WebElement:
+        try:
+            return self.wait.until(ec.presence_of_element_located(locator_obj))
+        except Exception:
+            return False
+
+    def get_web_elements_obj(self, locator_obj: object) -> List[WebElement]:
         try:
             return self.wait.until(ec.presence_of_all_elements_located(locator_obj))
         except Exception:
             return False
 
-    def scroll_down_until_end(self, page_down_delay: float = 0.2, stop_until: float = 0.95):
+    def scroll_down_until_end(self, page_down_delay: float = 0.2,
+        stop_until: float = 0.95) -> None:
         document_height = self.driver.execute_script("return document.body.scrollHeight")
         target_height_threshold = stop_until * document_height
         page_down_action = self.action.send_keys(Keys.PAGE_DOWN)
@@ -88,12 +119,13 @@ class WebExplorer:
             page_down_action.perform()
             time.sleep(page_down_delay)
 
-    def save_all_responses(self, filepath: str, decoder: str):
+    def save_all_responses(self, filepath: str, decoder: str) -> None:
+        """only available in selenium-wire driver"""
         with open(filepath, 'w') as f:
             for x in self.driver.requests:
                 f.write(x.response.body.decode(decoder) + '\n')
 
-    def get_last_page_num(self):
+    def get_last_page_num(self) -> int:
         focus = self.get_web_elements_obj(
             (By.XPATH, '(//div[@class="pageBar"]/a[@class="pageNum-form"])[last()]')
         )

@@ -1,0 +1,6 @@
+data_attribute,data_info
+main_source,"https://web.metro.taipei/pages/tw/roadmap/station"
+download_dirpath,"download-data_lake"
+structured_dirpath,"structured"
+normalized_dirpath,"../normalized-data_warehouse"
+aggregated_filepath,"../aggregated-data_mart"
