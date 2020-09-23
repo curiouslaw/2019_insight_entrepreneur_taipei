@@ -47,4 +47,5 @@ Current Progress:
     - [ ] create the text report version
     - [ ] build d3 visualization website template
 - [ ] build the overall script / bin directory for each apps
+- [ ] unit test and sample
 - [ ] post the web to the google app engine

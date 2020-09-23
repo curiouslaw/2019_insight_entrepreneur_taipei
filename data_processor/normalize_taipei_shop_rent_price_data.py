@@ -23,7 +23,9 @@ def normalize_data(filepath: str, helper_dict_filepath: str) -> pd.DataFrame:
         helper_dict = load_dictionary(helper_dict_filepath)
         data_df = data_df.rename(columns=helper_dict)
 
-    data_df['price'] = data_df['price'].apply(lambda x: int(x.replace(',','')))
+    data_df['price'] = data_df['price'].apply(lambda x: int(x.replace(',', '')))
+
+    data_df['township_chinese_name'] = data_df['section_name']  # this is the one that we would use as column key
 
     return data_df
 

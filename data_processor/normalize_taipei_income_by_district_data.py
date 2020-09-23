@@ -25,8 +25,8 @@ def normalize_data(filepath: str, helper_dict_filepath: str) -> pd.DataFrame:
         data_df = data_df.rename(columns=helper_dict)
 
     data_df = data_df.rename(columns={
-        data_df.columns[0]: 'section_name',
-        data_df.columns[1]: 'district_name',
+        data_df.columns[0]: 'township_chinese_name',  # this is the one that used for used keys
+        data_df.columns[1]: 'village_chinese_name',
     })
 
     return data_df

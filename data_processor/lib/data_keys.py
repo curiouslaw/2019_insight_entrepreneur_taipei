@@ -59,7 +59,7 @@ def load_dictionary(filepath: str) -> dict:
 
 
 class UsedKeys:
-    column_key_list = ['section_name']
+    column_key_list = ['township_chinese_name']
 
     def compute_similarity(self, compare_list: List[str]) -> dict:
         key_compare = self.used_keys.casefold()
