@@ -2,7 +2,7 @@
 echo $BASH_VERSION
 
 CURRENT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
-AVAILABLE_ARGUMENTS=(taipei_mrt_info taipei_map_points taipei_travel_network taiwan_twd97_map_data_village taiwan_twd97_map_data_city taiwan_twd97_map_data_province)
+AVAILABLE_ARGUMENTS=(taipei_mrt_info taipei_map_points taipei_travel_network taiwan_twd97_map_data_county taiwan_twd97_map_data_township taiwan_twd97_map_data_village)
 
 # extract compressed file in a directory and delete the original file
 extract_compressed_in_dir() {
