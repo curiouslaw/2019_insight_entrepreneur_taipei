@@ -21,7 +21,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
 def build_argparser():
-    available_data_name = ['taipei_mrt_info', 'taipei_map_points',
+    available_data_name = ['taipei_mrt_info',
         'taiwan_twd97_map_data_village', 'taiwan_twd97_map_data_city',
         'taiwan_twd97_map_data_province']
     parser = argparse.ArgumentParser(
