@@ -1,1 +1,1 @@
-https://tpdoi.blob.core.windows.net/taipei-travel/shops_en.gz
+https://tpdoi.blob.core.windows.net/taipei-travel/shops_zh-tw.gz

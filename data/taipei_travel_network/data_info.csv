@@ -1,5 +1,5 @@
 data_attribute,data_info
-main_source,https://data.gov.tw/dataset/128506
+main_source,https://data.gov.tw/dataset/128365
 get_datatype,csv
 date,20190925
 download_links_filepath,"download_links.txt"
@@ -7,4 +7,5 @@ download_dirpath,"download-data_lake"
 structured_filepath,"structured/taipei_travel_network.csv"
 normalized_filepath,"../normalized-data_warehouse"
 aggregated_filepath,"../aggregated-data_mart"
-notes,"file size is large, so provide download links instead (take it from file data_souce.csv take only english file)"
+description,"some restaurant and leisure data"
+notes,"file size is large, so provide download links instead (take it from file data_souce.csv take only traditional chinese file, which contains more data)"
