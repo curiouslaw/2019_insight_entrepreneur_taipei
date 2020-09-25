@@ -7,7 +7,7 @@ import os
 import googletrans
 
 from lib.data_keys import (
-    get_tabular_data_filepath, 
+    get_tabular_data_filepath,
     get_csv_column_name,
     contain_chinese_character,
     save_dictionary
