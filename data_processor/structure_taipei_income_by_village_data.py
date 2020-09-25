@@ -20,7 +20,10 @@ if __name__ == '__main__':
 
     for path in input_filepath_list:
         print('INFO: processing data from {}'.format(path))
-        df_data = df_data.append(pd.read_csv(path), ignore_index=True)
+        _county_id = os.path.basename(path).split('.')[0].split('-')[1]
+        _read_csv = pd.read_csv(path)
+        _read_csv['county_id'] = _county_id
+        df_data = df_data.append(_read_csv, ignore_index=True)
 
     print('INFO: saving data to {}'.format(output_filepath))
     df_data.to_csv(output_filepath, index=False)
