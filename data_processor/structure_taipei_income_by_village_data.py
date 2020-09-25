@@ -9,7 +9,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
 if __name__ == '__main__':
-    data_dir = os.path.join(BASE_DIR, 'data', 'taipei_income_by_district')
+    data_dir = os.path.join(BASE_DIR, 'data', 'taipei_income_by_village')
     data_info_path = os.path.join(data_dir, 'data_info.csv')
     data_info = DataInfo(data_info_path)
 

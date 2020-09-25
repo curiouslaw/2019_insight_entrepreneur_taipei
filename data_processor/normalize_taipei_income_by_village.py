@@ -111,7 +111,7 @@ def attach_key_id_by_name(data_df: pd.DataFrame, dimension_table: pd.DataFrame,
 if __name__ == '__main__':
     pd.options.mode.chained_assignment = None  # quiet pandas warning on chained operation
 
-    data_name = 'taipei_income_by_district'
+    data_name = 'taipei_income_by_village'
     data_dir = os.path.join(BASE_DIR, 'data', data_name)
     data_info_path = os.path.join(data_dir, 'data_info.csv')
     helper_dict_filepath = os.path.join(CURRENT_DIR, 'data', 'chinese_english_column_helper_dict.pkl')
