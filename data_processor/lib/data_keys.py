@@ -59,17 +59,22 @@ def load_dictionary(filepath: str) -> dict:
 
 
 class UsedKeys:
-    column_key_list = ['township_chinese_name']
+    column_key_list = ['county_id', 'township_chinese_name', 'village_chinese_name']
+    key_id = 'village_code'
 
-    def compute_similarity(self, compare_list: List[str]) -> dict:
-        key_compare = self.used_keys.casefold()
-        diff_value = map(lambda x: SequenceMatcher(a=key_compare, b=x).ratio, compare_list)
+    def compute_similarity(self, string_a: str, string_b: str) -> float:
+        seq = SequenceMatcher(None, a=string_a, b=string_b)
+        return seq.ratio()
+
+    def compute_similarity_list(self, string: str, compare_list: List[str]) -> dict:
+        key_compare = string.casefold()
+        diff_value = map(lambda x: self.compute_similarity(a=key_compare, b=x), compare_list)
         diff_dict = dict(zip(compare_list, diff_value))
 
         return diff_dict
 
-    def get_most_similar_keys(self, compare_list: List[str]) -> str:
-        diff_dict = self.compute_similarity(compare_list)
+    def get_most_similar_keys(self, string: str, compare_list: List[str]) -> str:
+        diff_dict = self.compute_similarity_list(string, compare_list)
 
         return max(diff_dict)
 
