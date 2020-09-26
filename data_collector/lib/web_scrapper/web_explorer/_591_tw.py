@@ -10,6 +10,12 @@ class WebExplorer591(WebExplorer):
         self.url = url
         super().__init__(self.driver, self.url)
 
+    def check_page_error(self) -> bool:
+        if self.find_a_web_element_obj((By.XPATH, '//div[@class="error-info"]')):
+            return True
+        else:
+            False
+
     def choose_initial_popup(self, town: str):
         return self.wait_and_click((By.XPATH, '//div/dl/dd'), lambda x: town in x.text)
 
@@ -58,3 +64,7 @@ class WebExplorer591(WebExplorer):
         self.choose_filter_town(select_city)
         self.close_pop_up()
         print("INFO: arriving at the selected homepage")
+
+    def go_to_page_id(self, post_id: int) -> None:
+        url = 'https://rent.591.com.tw/rent-detail-{}.html'.format(post_id)
+        self.get(url)
