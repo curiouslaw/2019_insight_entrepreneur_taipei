@@ -34,11 +34,11 @@ Current Progress:
     - [x] finish the structuring unstructure data part
     - [ ] finish the normalization data part
         - [x] make an automatic translator helper
-        - [ ] make an lat long mapper
+        - [x] make an lat long mapper
             - [x] get the lat long data for taipei_mrt_info
         - [x] finish taipei_income_by_district data part
-        - [ ] finish taipei_map_point data part
-        - [ ] finish taipei_mrt_info data part
+        - [x] finish taipei_map_point data part
+        - [x] finish taipei_mrt_info data part
         - [x] finish taipei_shop_rent_price data part
         - [ ] finish taipei_travel_network data part
     - [ ] finish the data aggregation part

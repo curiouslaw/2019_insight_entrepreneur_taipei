@@ -4,6 +4,6 @@ get_datatype,7z
 download_links_filepath,"download_links.txt"
 download_dirpath,"download-data_lake"
 structured_dirpath,"structured"
-normalized_dirpath,"../normalized-data_warehouse"
+normalized_dirpath,"../normalized-data_warehouse/taipei_mrt_info"
 aggregated_filepath,"../aggregated-data_mart"
 notes,"only sample file is included in git. Included the full download links instead (the links logic is in data_collector/generate_download_link.py file)"
