@@ -78,8 +78,14 @@ class UsedKeys:
 
         return max(diff_dict)
 
-    def list_contain_used_key(self, check_list: List[str]) -> bool:
+    def list_contain_column_key(self, check_list: List[str]) -> bool:
         if any((x in self.column_key_list for x in check_list)):
+            return True
+        else:
+            return False
+
+    def list_contain_key_id(self, check_list: List[str]) -> bool:
+        if (self.key_id in check_list):
             return True
         else:
             return False

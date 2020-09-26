@@ -1,3 +1,4 @@
+from builtins import ValueError
 import json
 from typing import List
 
@@ -25,7 +26,11 @@ def textfile_into_json_list(filepath: List[str]) -> List[dict]:
 def normalize_json_into_df(json_list: List[str]) -> pd.DataFrame:
     df = pd.DataFrame()
     for x in json_list:
-        df_add = pd.DataFrame.from_dict(x)
+        try:
+            df_add = pd.DataFrame.from_dict(x)
+        except ValueError:
+            df_add = pd.DataFrame.from_dict([x])
+
         df = df.append(df_add, ignore_index=True, verify_integrity=True)
 
         del df_add

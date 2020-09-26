@@ -4,6 +4,8 @@ from typing import List
 def fix_divider_error(string: str, divider: str, replace: str) -> str:
     if divider in string:
         return string.replace(divider, replace)
+    else:
+        return string
 
 
 def fix_endian_encoding_string(string: str) -> str:

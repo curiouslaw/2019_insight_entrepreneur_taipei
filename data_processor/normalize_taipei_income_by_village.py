@@ -17,13 +17,11 @@ CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
 BASE_DIR = os.path.dirname(CURRENT_DIR)
 
 
-def normalize_data(filepath: str, helper_dict_filepath: str,
-                   area_dimension_table: pd.DataFrame) -> pd.DataFrame:
+def normalize_data(filepath: str, helper_dict: dict) -> pd.DataFrame:
     data_df = pd.read_csv(filepath)
 
     # translate use generated google translate library if there is any chinese character
     if any([contain_chinese_character(x) for x in data_df.columns]):
-        helper_dict = load_dictionary(helper_dict_filepath)
         data_df = data_df.rename(columns=helper_dict)
 
     data_df = data_df.rename(columns={
@@ -34,7 +32,7 @@ def normalize_data(filepath: str, helper_dict_filepath: str,
     return data_df
 
 
-def attach_key_id_by_name(data_df: pd.DataFrame, dimension_table: pd.DataFrame,
+def attach_key_id_by_join(data_df: pd.DataFrame, dimension_table: pd.DataFrame,
     key_obj: UsedKeys) -> pd.DataFrame:
     column_keys = key_obj.column_key_list
     attach_id = key_obj.key_id
@@ -70,9 +68,9 @@ def attach_key_id_by_name(data_df: pd.DataFrame, dimension_table: pd.DataFrame,
         for index, row in keyed[keyed[attach_id].isnull()].iterrows():
             match_0 = dimension_table['county_id'] == row['county_id']
             match_1 = dimension_table[match_0]['township_chinese_name']\
-                .apply(lambda x: True if used_keys.compute_similarity(row['township_chinese_name'], x) > 0.5 else False)
+                .apply(lambda x: True if key_obj.compute_similarity(row['township_chinese_name'], x) > 0.5 else False)
             match_2 = dimension_table[match_0]['village_chinese_name']\
-                .apply(lambda x: True if used_keys.compute_similarity(row['village_chinese_name'], x) > 0.5 else False)
+                .apply(lambda x: True if key_obj.compute_similarity(row['village_chinese_name'], x) > 0.5 else False)
 
             if sum(match_1 & match_2) == 1:
                 keyed.loc[index, 'village_code'] = dimension_table[match_0][match_1 & match_2].iloc[0]['village_code']
@@ -81,9 +79,9 @@ def attach_key_id_by_name(data_df: pd.DataFrame, dimension_table: pd.DataFrame,
         for index, row in keyed[keyed[attach_id].isnull()].iterrows():
             match_0 = dimension_table['county_id'] == row['county_id']
             match_1 = dimension_table[match_0]['township_chinese_name']\
-                .apply(lambda x: True if used_keys.compute_similarity(row['township_chinese_name'], x) > 0.5 else False)
+                .apply(lambda x: True if key_obj.compute_similarity(row['township_chinese_name'], x) > 0.5 else False)
             match_2 = dimension_table[match_0]['village_chinese_name']\
-                .apply(lambda x: True if used_keys.compute_similarity(row['village_chinese_name'], x) > 0.8 else False)
+                .apply(lambda x: True if key_obj.compute_similarity(row['village_chinese_name'], x) > 0.8 else False)
 
             if sum(match_1 & match_2) == 1:
                 keyed.loc[index, 'village_code'] = dimension_table[match_0][match_1 & match_2].iloc[0]['village_code']
@@ -92,7 +90,7 @@ def attach_key_id_by_name(data_df: pd.DataFrame, dimension_table: pd.DataFrame,
         for index, row in keyed[keyed[attach_id].isnull()].iterrows():
             match_0 = dimension_table['county_id'] == row['county_id']
             match_1 = dimension_table[match_0]['village_chinese_name']\
-                .apply(lambda x: True if used_keys.compute_similarity(row['village_chinese_name'], x) > 0.8 else False)
+                .apply(lambda x: True if key_obj.compute_similarity(row['village_chinese_name'], x) > 0.8 else False)
 
             if sum(match_1) == 1:
                 keyed.loc[index, 'village_code'] = dimension_table[match_0][match_1].iloc[0]['village_code']
@@ -122,12 +120,15 @@ if __name__ == '__main__':
     input_filepath = data_info.get_structured_filepath()
     output_filepath = data_info.get_normalized_filepath()
 
+    helper_dict = load_dictionary(helper_dict_filepath)
+
     used_keys = UsedKeys()
-    data_df = normalize_data(input_filepath, helper_dict_filepath, area_dimension_table)
-    data_df = attach_key_id_by_name(data_df, area_dimension_table, used_keys)
+    data_df = normalize_data(input_filepath, helper_dict)
+    data_df = attach_key_id_by_join(data_df, area_dimension_table, used_keys)
+    
 
     # quick testing if there is key in the file before saving
-    if used_keys.list_contain_used_key(data_df.columns):
+    if used_keys.key_id(data_df.columns):
         pass
     else:
         raise KeyError("list doesn't contain any used key")
