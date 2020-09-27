@@ -121,9 +121,15 @@ class WebExplorer:
 
     def save_all_responses(self, filepath: str, decoder: str) -> None:
         """only available in selenium-wire driver"""
+        response_list = [x.response.body.decode(decoder) for x in self.driver.requests]
         with open(filepath, 'w') as f:
-            for x in self.driver.requests:
-                f.write(x.response.body.decode(decoder) + '\n')
+            f.write('\n'.join(response_list))
+
+    def save_all_request_url(self, filepath: str, decoder: str) -> None:
+        """only available in selenium-wire driver"""
+        request_url_list = [x.url for x in self.driver.requests]
+        with open(filepath, 'w') as f:
+            f.write('\n'.join(request_url_list))
 
     def get_last_page_num(self) -> int:
         focus = self.get_web_elements_obj(
