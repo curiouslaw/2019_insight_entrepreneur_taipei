@@ -35,35 +35,37 @@ class GeoCoder:
             else:
                 return False
 
-    def point_to_dict(self, key_id_point_tuple: Tuple[Union[str, int], Point],
+    def long_lat_tuple_to_dict(self, long_lat_tuple: Tuple[float, float],
         value_key: str = 'village_code', single_match: bool = True) -> dict:
-
-        key_id, point = key_id_point_tuple
+        point = Point(long_lat_tuple)
 
         if single_match:
             for index, row in self.shp_gdf.iterrows():
                 if point.within(row.geometry):
-                    return {key_id: row[value_key]}
-            return {key_id: None}
+                    return {long_lat_tuple: row[value_key]}
+            return {long_lat_tuple: None}
         else:
             found = self.shp_gdf.geometry.apply(lambda x: point.within(x))
             if any(found):
-                return {key_id: self.shp_gdf[found][value_key].values}
+                return {long_lat_tuple: self.shp_gdf[found][value_key].values}
             else:
-                return {key_id: None}
+                return {long_lat_tuple: None}
 
-    def point_to_dict_multiprocessing(self, key_id_point_tuple_list: List[tuple],
+    def long_lat_tuple_to_dict_multiprocessing(self, long_lat_tuple_list: List[tuple],
         value_key: str = 'village_code', single_match: bool = True,
         processor_use=None) -> List[dict]:
 
-        f = partial(self.point_to_dict,
+        unique_long_lat_tuple_list = list(set(long_lat_tuple_list))
+        unique_long_lat_tuple_list = [x for x in unique_long_lat_tuple_list if not (pd.isnull(x[0]) or pd.isnull(x[1]))]
+
+        f = partial(self.long_lat_tuple_to_dict,
             value_key=value_key, single_match=single_match)
 
         with Pool(processes=processor_use) as pool:
-            return_dict_list = pool.map(f, key_id_point_tuple_list)
+            return_dict_list = pool.map(f, unique_long_lat_tuple_list)
 
-        return return_dict_list
+        merged_dict = {}
+        for dictionary in return_dict_list:
+            merged_dict = {**merged_dict, **dictionary}
 
-
-
-
+        return merged_dict
