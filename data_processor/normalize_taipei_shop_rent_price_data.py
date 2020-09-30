@@ -1,8 +1,6 @@
 import os
 
 import pandas as pd
-import geopandas as gpd
-from shapely.geometry import Point
 
 from lib import shared_lib
 from shared_lib.data_info import DataInfo

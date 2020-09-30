@@ -4,7 +4,6 @@ import pandas as pd
 
 from lib import shared_lib
 from shared_lib.data_info import DataInfo
-from shapely.geometry.point import Point
 
 from lib.geolib_helper import get_shp_filepath
 from lib.geocoding import GeoCoder
@@ -27,7 +26,7 @@ if __name__ == '__main__':
 
     df_data = pd.DataFrame()
 
-    # actually this is the case where no structural need to be included, 
+    # actually this is the case where no structural need to be included,
     # usually in real case we usually just directly do normalization (next step).
     for path in input_filepath_list:
         print('INFO: processing data from {}'.format(path))
@@ -46,7 +45,7 @@ if __name__ == '__main__':
     # get all case, with suffix or non-suffix case
     df_data['station_name'] = df_data['station_name'].apply(lambda x: x[:-1] if x[-1] == '站' else x)
     df_data_suffix = df_data.copy()
-    df_data_suffix['station_name'] = df_data_suffix['station_name'] + '站' 
+    df_data_suffix['station_name'] = df_data_suffix['station_name'] + '站'
 
     df_data = df_data.append(df_data_suffix, ignore_index=True)
 

@@ -125,7 +125,6 @@ if __name__ == '__main__':
     used_keys = UsedKeys()
     data_df = normalize_data(input_filepath, helper_dict)
     data_df = attach_key_id_by_join(data_df, area_dimension_table, used_keys)
-    
 
     # quick testing if there is key in the file before saving
     if used_keys.key_id(data_df.columns):

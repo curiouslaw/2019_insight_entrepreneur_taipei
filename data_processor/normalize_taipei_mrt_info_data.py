@@ -1,4 +1,5 @@
 import os
+import re
 import shutil
 
 import pandas as pd
@@ -35,6 +36,7 @@ def normalize_data(filepath: str, column_zh_en_dict: dict) -> pd.DataFrame:
 
 def attach_key_id_by_join(data_df: pd.DataFrame,
     station_index_lookup: pd.DataFrame) -> pd.DataFrame:
+
     # code the village_code for station_in
     data_df = pd.merge(
         data_df,
@@ -51,6 +53,27 @@ def attach_key_id_by_join(data_df: pd.DataFrame,
     )
     data_df.rename(columns={'village_code': 'station_out_village_code'}, inplace=True)
 
+    # try to get the village code if not match
+    if any(null_station_in := data_df['station_in_village_code'].isnull()):
+        station_dict = dict(zip(station_index_lookup.index, station_index_lookup['village_code']))
+
+        data_df.loc[null_station_in, ['station_in_village_code']] = \
+            data_df[null_station_in]['station_in'].apply(
+                lambda x: station_dict.get(re.sub('[0-9]|[a-z]|[A-Z]', '', x))
+            )
+
+        data_df['station_in_village_code'] = data_df['station_in_village_code'].apply(int)
+
+    if any(null_station_out := data_df['station_out_village_code'].isnull()):
+        station_dict = dict(zip(station_index_lookup.index, station_index_lookup['village_code']))
+
+        data_df.loc[null_station_out, ['station_out_village_code']] = \
+            data_df[null_station_out]['station_out'].apply(
+                lambda x: station_dict.get(re.sub('[0-9]|[a-z]|[A-Z]', '', x))
+            )
+
+        data_df['station_out_village_code'] = data_df['station_out_village_code'].apply(int)
+
     return data_df
 
 
@@ -64,7 +87,9 @@ if __name__ == '__main__':
     data_info = DataInfo(data_info_path)
 
     input_filepath_list = data_info.get_structured_filepath_list()
+    # input_filepath_list = [os.path.join(data_dir, 'structured', '臺北捷運每日分時各站OD流量統計資料_202007.csv')]
     output_dirpath = data_info.get_normalized_dirpath()
+    filename_prefix = 'taipei_mrt_passenger_data'
 
     used_keys = UsedKeys()
     helper_dict = load_dictionary(helper_dict_filepath)
@@ -83,9 +108,7 @@ if __name__ == '__main__':
         _filename = _filename.split('.')[0]
         _filename, _month = _filename.split('_')
 
-        _filename = 'taipei_mrt_passenger_statistic'
-
-        _output_filepath = os.path.join(output_dirpath, '_'.join([_filename, _month]))
+        _output_filepath = os.path.join(output_dirpath, '_'.join([filename_prefix, _month]))
         _output_filepath = _output_filepath + '.csv'
 
         data_df = normalize_data(path, helper_dict)

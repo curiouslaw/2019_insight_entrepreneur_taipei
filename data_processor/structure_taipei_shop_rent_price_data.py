@@ -1,5 +1,4 @@
 import os
-from typing import Dict
 from urllib.parse import parse_qsl, urlparse
 
 import pandas as pd
@@ -72,9 +71,7 @@ if __name__ == '__main__':
     main_data_df = structure_main_data(os.path.join(input_dirpath, '591_xhr_responses.json'))
     long_lat_data_df = structure_lat_long_data(os.path.join(input_dirpath, '591_lat_long_lookup.json'))
 
-    merged_df = pd.merge(main_data_df, long_lat_data_df,
-        how='left', on='id'
-    )
+    merged_df = pd.merge(main_data_df, long_lat_data_df, how='left', on='id')
 
     merged_df.to_csv(output_filepath, index=False)
     print("INFO: data processed and saved in {}".format(output_filepath))
