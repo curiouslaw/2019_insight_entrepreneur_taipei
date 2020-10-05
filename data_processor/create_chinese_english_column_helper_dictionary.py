@@ -13,12 +13,13 @@ from lib.data_keys import (
     save_dictionary
 )
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
+BASE_DIR = os.path.dirname(CURRENT_DIR)
 
 
 if __name__ == '__main__':
     data_dir = os.path.join(BASE_DIR, 'data')
-    output_path = os.path.join(BASE_DIR, 'data_processor', 'data', 'chinese_english_column_helper_dict.pkl')
+    output_path = os.path.join(CURRENT_DIR, 'data', 'chinese_english_column_helper_dict.pkl')
 
     # get all column name
     print("INFO: getting all column name")
