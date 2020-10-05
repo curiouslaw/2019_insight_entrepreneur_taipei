@@ -7,7 +7,7 @@ import pandas as pd
 from lib import shared_lib
 from shared_lib.data_info import DataInfo
 
-from data_processor.lib.data_keys import (
+from lib.data_keys import (
     contain_chinese_character,
     load_dictionary,
     UsedKeys
@@ -87,7 +87,6 @@ if __name__ == '__main__':
     data_info = DataInfo(data_info_path)
 
     input_filepath_list = data_info.get_structured_filepath_list()
-    # input_filepath_list = [os.path.join(data_dir, 'structured', '臺北捷運每日分時各站OD流量統計資料_202007.csv')]
     output_dirpath = data_info.get_normalized_dirpath()
     filename_prefix = 'taipei_mrt_passenger_data'
 
