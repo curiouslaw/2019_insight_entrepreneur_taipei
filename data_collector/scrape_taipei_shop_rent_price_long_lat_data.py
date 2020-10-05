@@ -107,7 +107,7 @@ if __name__ == '__main__':
     web_explorer = WebExplorer591(driver, start_url)
     check_page(driver)
 
-    # sys.stderr = object  # a hacky way to quier the warning
+    sys.stderr = object  # a hacky way to quier the warning
 
     # start page as new guest
     print("INFO: starting the crawler")
