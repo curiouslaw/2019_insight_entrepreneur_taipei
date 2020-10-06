@@ -12,7 +12,7 @@ if __name__ == '__main__':
     village_shp_filepath = get_shp_filepath(os.path.join(data_dir, 'taiwan_twd97_map_data_village'))
 
     data_mart_dirpath = os.path.join(data_dir, 'aggregated-data_mart')
-    output_filepath = os.path.join(data_mart_dirpath, 'simplified_taipei_village.gejson')
+    output_filepath = os.path.join(data_mart_dirpath, 'simplified_taipei_village.geojson')
 
     village_gpd = load_normalize_gov_shp_data(village_shp_filepath)
 
