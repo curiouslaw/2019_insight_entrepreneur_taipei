@@ -6,9 +6,7 @@ A simplification of full data cycle, from raw data being gathered (web scrapping
 <br>
 
 ## Project structure, tech, and stakeholder
-
-**As clarity / understandable process is the objective, some of the technology might not be the best practice / state of art/ perform really fast, more of the simple one*
-
+**The technology is chosen based on simplicity to be taught / debug*
 ![project structure](project_structure.png)
 
 The project structure, consist of:
@@ -18,6 +16,7 @@ The project structure, consist of:
 - `presentation` (Data Scientist / Business Analyst) : craft and tell the important data into understandable form (Python, Javascript, CSS - jupyter, reveal js, rise)
 
 In this case there isn't, but in industry there area also this roles:
+- `data tracking` (Data Engineer) : Design a robust and streamline data pipeline to get user activities.
 - `dashboard` (Business Intelligence) : Make monitoring dashboard to help business user take decision quickly.
 - `prediction model` (Data Scientist / ML Engineer) : Make a prediction model to solve business problem (could be predict the future / detect fraud / recommending item).
 <br>
