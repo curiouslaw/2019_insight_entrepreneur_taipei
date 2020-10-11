@@ -127,7 +127,7 @@ if __name__ == '__main__':
     data_df = attach_key_id_by_join(data_df, area_dimension_table, used_keys)
 
     # quick testing if there is key in the file before saving
-    if used_keys.key_id(data_df.columns):
+    if used_keys.list_contain_key_id(data_df.columns):
         pass
     else:
         raise KeyError("list doesn't contain any used key")

@@ -21,7 +21,7 @@ if __name__ == '__main__':
     data_dir = os.path.join(BASE_DIR, 'data')
     output_path = os.path.join(CURRENT_DIR, 'data', 'chinese_english_column_helper_dict.pkl')
 
-    # get all column name
+    # get all column name, this is from structured data
     print("INFO: getting all column name")
     tabular_data_filepath = get_tabular_data_filepath(data_dir)
 
