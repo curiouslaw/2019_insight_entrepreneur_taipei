@@ -7,6 +7,7 @@
 *.swp
 .ipynb_checkpoints/
 *.DS_Store
+**/dask-worker-space
 
 # download data
 **/download-data_lake/*
@@ -14,3 +15,7 @@
 **/normalized-data_warehouse/*
 !.keep
 !data/taipei_income_by_counties/download-data_lake/*
+!data_analysis/*.ipynb
+
+# main files
+!recommendation_reveal_js.ipynb
