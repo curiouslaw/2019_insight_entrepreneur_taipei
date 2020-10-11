@@ -9,6 +9,7 @@
 *.DS_Store
 **/dask-worker-space
 *.log
+*.drawio
 
 # download data
 **/download-data_lake/*

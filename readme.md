@@ -1,51 +1,73 @@
-# 2019 Insight Entrepreneur Taipei
-**still work in progress, see [below](#project-progress) for information*
-
--------
+# Taipei food industry insight
 
 ## What is this?
-This is a repo show the process of how raw data (include from external data, throgh web scraping) end up being an understandable business insight. The code would try to make *balance** between code clarity (with data scientist in mind) and automation (with programmer / data engineer in mind). This repo would also demonstrate the concept of `data_lake`, `data_warehouse`, and `data_mart` in intuitive way. 
+A simplification of full data cycle, from raw data being gathered (web scrapping), processed (data pipeline), analyzed (statistic modeled), until presented (with data interactivity). The objective of this project is **to show how data being translated from one to another state and the stakeholders of the process.** Most part of the project are written in Python.
+<br>
+<br>
 
-**some part of code might be to redundant (i.e. `data_processor` part) to help make it easier to know what's going on inside the code. I also avoid to use framework as much as possible, for readability purpose.*
+## Project structure, tech, and stakeholder
 
-**note:**
-- the data not included in this repo, but you could run the script to automatically download data
-- data scientist / other people out there that want to play with the structured clean data, might be interested to go to `data_warehouse` part.
-- for more scalable web scaraping, you could explore [Scrapy](https://github.com/scrapy/scrapy) Framework.
+**As clarity / understandable process is the objective, some of the technology might not be the best practice / state of art/ perform really fast, more of the simple one*
 
-## How to to read the project structure
-There would be 3 main apps / parts that contain in this repo:
-- **`data_collector`** : apps that will scrape the external data (591.com.tw) and automatically get newest download links, download, unzip, and clean data (data.gov.tw). *use: python (selenium) and bash*
-- **`data_processor`** : apps that process data from it's raw form (`data_lake`) until it is ready to use (`data_mart`). *use: python (pandas and spark)*
-- **`data_visualizer`** : this is more of a web that made with d3.js. *use: d3.js*
+![project structure](project_structure.png)
 
-## Project Progress
-Current Progress:
+The project structure, consist of:
+- `data_collector` (Data Engineer) : web scrapping downloader script (Python, Bash - selenium, requests, beautifulsoup).
+- `data_processor` (Data Engineer) : parsing, normalize, and geocoding (Python - multiprocessing, pandas, geopandas, shapely).
+- `data_analysis` (Data Scientist / Business Analyst) : statistical simulation, aggregation, visualization (Python - dask, jupyter, plotly)
+- `presentation` (Data Scientist / Business Analyst) : craft and tell the important data into understandable form (Python, Javascript, CSS - jupyter, reveal js, rise)
 
-- [x] make some hypothesis about the report
-- [x] get some data source that could support the hypothesis
-- [x] build code core library for handling data info / metadata
-    - [x] create data info object and class
-- [x] finish the data_collector app
-    - [x] create script that automatically search for download link for data.gov.tw
-    - [x] create a script that can automatically download link list, extract, and do cleanup
-    - [x] build a web scrapper for 591.com.tw
-- [ ] finish the data_processor app
-    - [x] finish the structuring unstructure data part
-    - [ ] finish the normalization data part
-        - [x] make an automatic translator helper
-        - [x] make an lat long mapper
-            - [x] get the lat long data for taipei_mrt_info
-        - [x] finish taipei_income_by_district data part
-        - [x] finish taipei_map_point data part
-        - [x] finish taipei_mrt_info data part
-        - [x] finish taipei_shop_rent_price data part
-        - [ ] finish taipei_travel_network data part
-    - [ ] finish the data aggregation part
-- [ ] finish the data_visualization part
-    - [ ] explore and create visualization concept
-    - [ ] create the text report version
-    - [ ] build d3 visualization website template
-- [ ] build the overall script / bin directory for each apps
-- [ ] unit test and sample
-- [ ] post the web to the google app engine
+In this case there isn't, but in industry there area also this roles:
+- `dashboard` (Business Intelligence) : Make monitoring dashboard to help business user take decision quickly.
+- `prediction model` (Data Scientist / ML Engineer) : Make a prediction model to solve business problem (could be predict the future / detect fraud / recommending item).
+<br>
+<br>
+
+## Setup
+**The project haven't been tested on windows.*
+
+Recommended to use [Anaconda](https://www.anaconda.com/products/individual) for setup project environment, because there is a lot of non-python package. Create new environment using `requirement_conda.yml`. Here is how to setup the project folder, from clone to install the environment:
+```
+git clone https://github.com/curiouslaw/taipei_food_industry_insight
+cd taipei_food_industry_insight
+conda env create --file requirements_conda.yml --prefix ./conda-env
+```
+then to activate the environment, use this command. 
+```
+conda activate ./conda-env
+```
+To run below command, you need to use the environment (in env active state).
+
+There might be some non-python package that would be used for some case. The lis is in file `unix_requirements.txt`. Please install with `apt-get` / other for linux or `brew` for mac.
+
+## How to run the program
+Some notes about the executable:
+
+- Most of the command are located in `script` folder in the app and each sub-app. 
+- There is some option in the python file / bash file (i.e. `python data_collector/scrape_taipei_shop_rent_price_main_data.py -o show` could let you see how the web crawler jump click from one website to another). This could be shown with the command `-h` on the code.
+- you might need to set the execute permission. You could use `chmod 755 <filename>` for setting up the run.
+
+Some important / interesting command might want to know:
+
+- get the clean and granular data / data warehouse:
+```
+<project root dir>/script/execute_data_collector.sh
+<project root dir>/script/execute_data_collector.sh
+```
+- get the raw data from the source (data lake):
+```
+<project root dir>/script/execute_data_collector.sh
+```
+- see how the a web scrapping work:
+```
+python <project root dir>/data_collector/scrape_taipei_shop_rent_price_main_data.py -o show
+```
+- auto download and extract script :
+```
+<project root dir>/data_collector/script/process_download_data.sh
+```
+
+## Other notes
+Post an issue if you have any question / so on.
+
+I hope the project could help you in any way!
