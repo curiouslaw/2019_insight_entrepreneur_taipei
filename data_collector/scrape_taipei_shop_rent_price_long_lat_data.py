@@ -19,6 +19,7 @@ from typing import List
 
 from seleniumwire import webdriver
 from selenium.common.exceptions import TimeoutException
+from webdriver_manager.firefox import GeckoDriverManager
 
 from lib import shared_lib
 from shared_lib.data_info import DataInfo
@@ -91,14 +92,15 @@ if __name__ == '__main__':
     # set webdriver, request interceptor scope, and wait object
     print("note: this scrapping will take hours (there are some brakes "
         "to respect the website). The program heavily depend on your internet connection")
-    print("INFO: setup crawler, use Chrome driver")
-    webdriver_options = webdriver.ChromeOptions()
+    print("INFO: setup crawler, use Firefox driver")
+    webdriver_options = webdriver.FirefoxOptions()
     if option == 'hide':
         webdriver_options.headless = True
     elif option == 'show':
         webdriver_options.headless = False
 
-    driver = webdriver.Chrome(options=webdriver_options)
+    driver = webdriver.Firefox(executable_path=GeckoDriverManager().install(),
+                               options=webdriver_options)
     driver.set_page_load_timeout(60)
     url_regex = '.*maps\.google\.com\.tw\/maps?.*'
     driver.scopes = [url_regex]

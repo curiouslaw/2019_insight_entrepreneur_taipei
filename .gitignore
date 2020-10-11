@@ -8,6 +8,7 @@
 .ipynb_checkpoints/
 *.DS_Store
 **/dask-worker-space
+*.log
 
 # download data
 **/download-data_lake/*

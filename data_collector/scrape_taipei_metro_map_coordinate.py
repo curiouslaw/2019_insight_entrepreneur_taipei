@@ -17,6 +17,7 @@ import time
 
 import pandas as pd
 from selenium import webdriver
+from webdriver_manager.firefox import GeckoDriverManager
 
 from lib import shared_lib
 from shared_lib.data_info import DataInfo
@@ -60,14 +61,15 @@ if __name__ == '__main__':
 
     # set webdriver, request interceptor scope, and wait object
     print("note: the program heavily depend on your internet connection")
-    print("INFO: setup crawler, use Chrome driver")
-    webdriver_options = webdriver.ChromeOptions()
+    print("INFO: setup crawler, use Firefox driver")
+    webdriver_options = webdriver.FirefoxOptions()
     if option == 'hide':
         webdriver_options.headless = True
     elif option == 'show':
         webdriver_options.headless = False
 
-    driver = webdriver.Chrome(options=webdriver_options)
+    driver = webdriver.Firefox(executable_path=GeckoDriverManager().install(),
+                               options=webdriver_options)
     driver.set_page_load_timeout(30)
     start_url = data_info.get_info_force('main_source')
 
