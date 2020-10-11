@@ -1,5 +1,6 @@
 import os
 import pandas as pd
+pd.set_option("mode.chained_assignment", None)
 
 from lib.geolib_helper import get_shp_filepath, load_normalize_gov_shp_data
 
