@@ -13,7 +13,7 @@ export_func() {
     cp ${APP_DIR}/src/${TEMPLATE} ./.${TEMPLATE}
     jupyter nbconvert --to hide_code_latexpdf ${input_filepath} \
         --execute --ExecutePreprocessor.timeout=-1 \
-        --template .custom_hide_code_article.tplx \
+        --template .${TEMPLATE} \
         --output-dir ${output_dirpath}
     if [[ -f .${TEMPLATE} ]]; then
         rm .${TEMPLATE}
