@@ -67,6 +67,6 @@ python <project root dir>/data_collector/scrape_taipei_shop_rent_price_main_data
 ```
 
 ## Other notes
-Post an issue if you have any question / so on.
+Feel free to put github issue if any (question / suggestion  / etc).
 
 I hope the project could help you in any way!
