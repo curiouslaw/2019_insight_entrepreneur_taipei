@@ -1,5 +1,7 @@
 # Taipei food industry insight
 
+see the final reveal.js presentation on [this link](https://curiouslaw.github.io/taipei_food_industry_insight/presentation.slides.html)
+
 ## What is this?
 A simplification of full data cycle, from raw data being gathered (web scrapping), processed (data pipeline), analyzed (statistic modeled), until presented (with data interactivity). The objective of this project is **to show how data being translated from one to another state and the stakeholders of the process.** Most part of the project are written in Python.
 <br>
@@ -50,20 +52,24 @@ Some important / interesting command might want to know:
 
 - get the clean and granular data / data warehouse:
 ```
-<project root dir>/script/execute_data_collector.sh
-<project root dir>/script/execute_data_collector.sh
+<project root dir>/./script/execute_data_collector.sh
+<project root dir>/./script/execute_data_collector.sh
 ```
 - get the raw data from the source (data lake):
 ```
-<project root dir>/script/execute_data_collector.sh
+<project root dir>/./script/execute_data_collector.sh
 ```
 - see how the a web scrapping work:
 ```
-python <project root dir>/data_collector/scrape_taipei_shop_rent_price_main_data.py -o show
+python <project root dir>/./data_collector/scrape_taipei_shop_rent_price_main_data.py -o show
 ```
 - auto download and extract script :
 ```
-<project root dir>/data_collector/script/process_download_data.sh
+<project root dir>/./data_collector/script/process_download_data.sh
+```
+- publish slide (turn `recommendation.ipynb` into reveal.js slides)
+```
+<project root dir>/./script/publish_slides.sh
 ```
 
 ## Other notes
