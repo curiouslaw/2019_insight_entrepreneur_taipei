@@ -2,14 +2,15 @@ import plotly.graph_objects as go
 
 
 def add_chart_title(fig: go.Figure, title: str, elevate_line: int = 1,
-    title_margin: bool = 40, **kwargs) -> None:
+    title_margin: int = 40, font_size: int = 12, **kwargs) -> None:
 
     y_line = 0.98 + (elevate_line * 0.04)
     y_annotation = y_line
 
     fig.add_annotation(
         text=title,
-        font={'size': 12},
+        font={'size': font_size},
+        align='left',
         yanchor='bottom',
         xref='paper', x=0.5, yref='paper', y=y_annotation,
         showarrow=False,
